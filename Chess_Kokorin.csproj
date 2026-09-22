@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Horse.cs" />
     <Compile Include="Classes\Pawn.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -95,11 +96,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Horse.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Pawn %28black%29.png" />
     <Resource Include="Images\Pawn %28select%29.png" />
     <Resource Include="Images\Pawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Horse %28black%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Horse %28select%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

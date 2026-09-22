@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Chess_Kokorin.Classes;
 
 namespace Chess_Kokorin
 {
@@ -23,6 +24,7 @@ namespace Chess_Kokorin
     {
         public static MainWindow mainWindow;
         public List<Classes.Pawn> Pawns = new List<Classes.Pawn>();
+        public List<Classes.Horse> Horses = new List<Classes.Horse>();
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +38,9 @@ namespace Chess_Kokorin
             Pawns.Add(new Classes.Pawn(6, 1, false));
             Pawns.Add(new Classes.Pawn(7, 1, false));
 
+            Horses.Add(new Classes.Horse(1, 0, false));
+            Horses.Add(new Classes.Horse(6, 0, false));
+
             Pawns.Add(new Classes.Pawn(0, 6, true));
             Pawns.Add(new Classes.Pawn(1, 6, true));
             Pawns.Add(new Classes.Pawn(2, 6, true));
@@ -44,6 +49,9 @@ namespace Chess_Kokorin
             Pawns.Add(new Classes.Pawn(5, 6, true));
             Pawns.Add(new Classes.Pawn(6, 6, true));
             Pawns.Add(new Classes.Pawn(7, 6, true));
+
+            Horses.Add(new Classes.Horse(1, 7, true));
+            Horses.Add(new Classes.Horse(6, 7, true));
 
             CreateFigure();
         }
@@ -65,6 +73,23 @@ namespace Chess_Kokorin
                 Pawn.Figure.MouseDown += Pawn.SelectFigure;
                 gameBoard.Children.Add(Pawn.Figure);
             }
+
+            foreach (Classes.Horse Horse in Horses)
+            {
+                Horse.Figure = new Grid()
+                {
+                    Width = 50,
+                    Height = 50
+                };
+                if (Horse.Black)
+                    Horse.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Horse (black).png")));
+                else
+                    Horse.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Horse.png")));
+                Grid.SetColumn(Horse.Figure, Horse.X);
+                Grid.SetRow(Horse.Figure, Horse.Y);
+                Horse.Figure.MouseDown += Horse.SelectFigure;
+                gameBoard.Children.Add(Horse.Figure);
+            }
         }
 
         public void OnSelect(Classes.Pawn SelectPawn)
@@ -73,6 +98,13 @@ namespace Chess_Kokorin
                 if (Pawn != SelectPawn)
                     if (Pawn.Select)
                         Pawn.SelectFigure(null, null);
+        }
+        public void OnSelect(Classes.Horse SelectHorse)
+        {
+            foreach (Classes.Horse Horse in Horses)
+                if (Horse != SelectHorse)
+                    if (Horse.Select)
+                        Horse.SelectFigure(null, null);
         }
         private void SelectTile(object sender, MouseButtonEventArgs e)
         {
@@ -83,6 +115,15 @@ namespace Chess_Kokorin
             if (SelectPawn != null)
             {
                 SelectPawn.Transform(X, Y);
+            }
+            Classes.Horse SelectHorse = Horses.Find(x => x.Select == true);
+            if (SelectHorse != null)
+            {
+                
+            }
+            if (SelectHorse != null)
+            {
+                SelectHorse.Transform(X, Y);
             }
         }
     }
